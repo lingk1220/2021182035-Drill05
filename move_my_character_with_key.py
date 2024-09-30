@@ -2,7 +2,7 @@ from pico2d import *
 
 running = True
 x = 960 // 2
-y = 700
+y = 300
 width = 960
 height = 750
 frame = 0
@@ -55,7 +55,7 @@ def move():
         x -= dir_x * 5
 
     y += dir_y * 5
-    if 0 > y - sprite_size//2 - 30 or height < y + sprite_size//2 - 65:
+    if 0 > y - sprite_size//2 - 35 or height < y + sprite_size//2 - 65:
         y -= dir_y * 5
 
 while running:
