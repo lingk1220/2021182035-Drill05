@@ -1,9 +1,9 @@
 from pico2d import *
 
 
-open_canvas()
-grass = load_image('grass.png')
-character = load_image('animation_sheet.png')
+open_canvas(960, 750)
+background = load_image('TUK_GROUND.png')
+character = load_image('Dash.png')
 
 
 def handle_events():
@@ -35,11 +35,11 @@ dir = 0
 
 while running:
     clear_canvas()
-    grass.draw(400, 30)
+    background.draw(480, 375, 960, 750)
     character.clip_draw(frame * 100, 100, 100, 100, x, 90)
     update_canvas()
     handle_events()
-    frame = (frame + 1) % 8
+    frame = (frame + 1) % 6
     x += dir * 5
     delay(0.05)
 
