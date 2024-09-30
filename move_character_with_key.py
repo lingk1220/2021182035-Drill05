@@ -39,19 +39,28 @@ def handle_events():
 
 running = True
 x = 960 // 2
+y = 300
+width = 960
+height = 750
 frame = 0
 dir_x = 0
 dir_y = 0
-
+flip = ''
 while running:
     clear_canvas()
     background.draw(480, 375, 960, 750)
-    character.clip_composite_draw(frame * 128, 0, 128, 128, 0, 'h', x, 130, 200, 200)
+
+    if dir_x == 1:
+        flip = ''
+    elif dir_x == -1:
+        flip = 'h'
+
+    character.clip_composite_draw(frame * 128, 0, 128, 128, 0, flip, x, y, 200, 200)
     update_canvas()
     handle_events()
     frame = (frame + 1) % 6
     x += dir_x * 5
-    delay(0.1)
+    delay(0.05)
 
 
 close_canvas()
