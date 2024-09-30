@@ -1,10 +1,20 @@
 from pico2d import *
 
+running = True
+x = 960 // 2
+y = 700
+width = 960
+height = 750
+frame = 0
+dir_x = 0
+dir_y = 0
+flip = ''
+sprite_size = 128
 
-open_canvas(960, 750)
+open_canvas(width, height)
 background = load_image('TUK_GROUND.png')
-character = load_image('walk.png')
-
+character_walk = load_image('walk.png')
+character_idle = load_image('idle.png')
 
 def handle_events():
     global running
@@ -37,29 +47,34 @@ def handle_events():
             elif event.key == SDLK_DOWN:
                 dir_y += 1
 
-running = True
-x = 960 // 2
-y = 300
-width = 960
-height = 750
-frame = 0
-dir_x = 0
-dir_y = 0
-flip = ''
+def move():
+    global x, y
+
+    x += dir_x * 5
+    if 0 > x - sprite_size//2 + 60 or width < x + sprite_size//2 - 60:
+        x -= dir_x * 5
+
+    y += dir_y * 5
+    if 0 > y - sprite_size//2 - 30 or height < y + sprite_size//2 - 65:
+        y -= dir_y * 5
+
 while running:
     clear_canvas()
-    background.draw(480, 375, 960, 750)
+    background.draw(width/2, height/2, width, height)
 
     if dir_x == 1:
         flip = ''
     elif dir_x == -1:
         flip = 'h'
 
-    character.clip_composite_draw(frame * 128, 0, 128, 128, 0, flip, x, y, 200, 200)
+    if dir_x == 0 and dir_y == 0:
+        character_idle.clip_composite_draw(frame * sprite_size, 0, sprite_size, sprite_size, 0, flip, x, y, 200, 200)
+    else:
+        character_walk.clip_composite_draw(frame * sprite_size, 0, sprite_size, sprite_size, 0, flip, x, y, 200, 200)
     update_canvas()
     handle_events()
-    frame = (frame + 1) % 6
-    x += dir_x * 5
+    frame = (frame + 1) % 7
+    move()
     delay(0.05)
 
 
